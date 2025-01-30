@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тест Яндекс SmartCaptcha</title>
+  <script src="https://smartcaptcha.yandexcloud.net/captcha.js" defer></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f9f9f9; /* Цвет фона */
+    }
+    #captcha-container {
+      width: 100%;
+      max-width: 300px; /* Максимальная ширина для кнопки */
+      height: 100px; /* Высота контейнера */
+    }
+  </style>
+</head>
+<body>
+  <div
+    id="captcha-container"
+    class="smart-captcha"
+    data-sitekey="ysc1_G6HSMHbwOOZhDZbyHCbQt7w3mU9AfX9mp0eiiq3Zb8929ea1">
+  </div>
+
+  <script>
+    window.onload = function () {
+      const captcha = new window.smartCaptcha.Widget({
+        sitekey: 'ysc1_G6HSMHbwOOZhDZbyHCbQt7w3mU9AfX9mp0eiiq3Zb8929ea1',
+        callback: function (token) {
+          // Передача токена в Flutter через JavaScript-канал
+          window.flutter_inappwebview.callHandler('jsBridge', token);
+        },
+      });
+      captcha.render('captcha-container');
+    };
+  </script>
+</body>
+</html>
